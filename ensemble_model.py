@@ -1,9 +1,7 @@
-
-# Libraries
+# Libraries used for the model
 import numpy as np 
 import pandas as pd
 from sklearn import metrics
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, VotingClassifier
@@ -14,13 +12,13 @@ from sklearn.feature_selection import f_regression, mutual_info_regression
 import xgboost as xgb
     
 # Import dataset
-print 'Lading data ...'
-nega1 = pd.read_csv('Dipep_negative.csv', header= None)
-nega2 = pd.read_csv('AminoFreq_negative.csv', header= None)
+print 'Loading data ...'
+nega1 = pd.read_csv('data/Dipep_negative.csv', header= None)
+nega2 = pd.read_csv('data/AminoFreq_negative.csv', header= None)
 nega = pd.concat([nega1, nega2], axis = 1)
 
-posi1 = pd.read_csv('Dipep_positive219.csv', header= None)
-posi2 = pd.read_csv('AminoFreq_positive219.csv', header= None)
+posi1 = pd.read_csv('data/Dipep_positive219.csv', header= None)
+posi2 = pd.read_csv('data/AminoFreq_positive219.csv', header= None)
 posi = pd.concat([posi1, posi2], axis = 1)
 
 nega_class = pd.DataFrame(np.zeros((len(nega))), columns=['class'])
@@ -56,4 +54,4 @@ scores = cross_val_score(eclf1, X_new, y, cv=5)
 # output
 print 'score:',scores
 avarage_acc = sum(scores)/len(scores)
-print 'ava_score:',avarage_acc
+print 'average_score:',avarage_acc
