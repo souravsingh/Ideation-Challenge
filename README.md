@@ -9,4 +9,16 @@ The repository contains the code and the data related to the Ideation Challenge,
 The challenge aims to find an algorithm which can make use of biologically relevant features and report a higher accuracy than the approaches used for the 3dswapping server like SVM and Random Forests.
 
 
+# Running the code
 
+The preprocessed dataset in FASTA format is stored in the ``data/`` directory along with the amino acid frequency and dipeptide frequency dataset is stored in the ``data/`` directory.
+
+The Perl programs used to compute the amino acid frequency and dipeptide frequency is stored in the ``utils\`` directory.
+
+To run the Machine Learning model, first install the necessary requirements for the program using-
+
+```
+pip install -r requirements.txt
+```
+
+Once done, You can now run the model contained in ``ensemble_model.py`` using- `` python ensemble_model.py`` 
