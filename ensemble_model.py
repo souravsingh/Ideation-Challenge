@@ -1,6 +1,10 @@
 # Libraries used for the model
 import numpy as np 
+
 import pandas as pd
+
+import matplotlib.pyplot as plt 
+
 from sklearn import metrics
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -9,6 +13,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.feature_selection import f_regression, mutual_info_regression
+from sklearn.metrics import roc_curve, auc
+
 import xgboost as xgb
     
 # Import dataset
@@ -31,6 +37,7 @@ df = pd.concat([nega_data, posi_data])
 
 # Target values
 y = df['class']
+n_classes = y.shape[1]
 del df['class']
 
 # Select features according to the k highest scores
@@ -53,5 +60,29 @@ scores = cross_val_score(eclf1, X_new, y, cv=5)
 
 # output
 print 'score:',scores
-avarage_acc = sum(scores)/len(scores)
-print 'average_score:',avarage_acc
+average_acc = sum(scores)/len(scores)
+print 'average_score:',average_acc
+
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Compute micro-average ROC curve and ROC area
+fpr["micro"], tpr["micro"], _ = roc_curve(y_test.ravel(), y_score.ravel())
+roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+plt.figure()
+lw = 2
+plt.plot(fpr[2], tpr[2], color='darkorange',
+         lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic example')
+plt.legend(loc="lower right")
+plt.savefig("output.png")
