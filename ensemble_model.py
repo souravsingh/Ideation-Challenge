@@ -6,14 +6,10 @@ import pandas as pd
 import matplotlib.pyplot as plt 
 
 from sklearn import metrics
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, VotingClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-from sklearn.feature_selection import f_regression, mutual_info_regression
-from sklearn.metrics import roc_curve, auc
 
 import xgboost as xgb
     
